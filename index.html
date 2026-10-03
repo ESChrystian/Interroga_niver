@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossiê Confidencial • Caso Especial 🕵️‍♀️️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier Prime', Courier, monospace;
+        }
+
+        body {
+            background-color: #0b0c10;
+            color: #c5c6c7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Efeito de Sirene Policial */
+        @keyframes policeSirens {
+            0% { box-shadow: inset 0 0 100px rgba(255, 0, 0, 0.4), 0 0 50px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: inset 0 0 100px rgba(0, 120, 255, 0.4), 0 0 50px rgba(0, 120, 255, 0.5); }
+            100% { box-shadow: inset 0 0 100px rgba(255, 0, 0, 0.4), 0 0 50px rgba(255, 0, 0, 0.5); }
+        }
+
+        body.sirens-active {
+            animation: policeSirens 1.5s infinite ease-in-out;
+        }
+
+        /* Fundo com Textura de Dossie / Arquivo Confidencial */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(19,20,26,0.9) 0%, rgba(8,9,12,0.95) 100%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            padding: 20px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* CARD DE INTERROGATÓRIO */
+        .phase-card {
+            background: rgba(18, 20, 26, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px 20px;
+            border: 2px solid #1f2833;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .phase-card::before {
+            content: "CONFIDENCIAL // SETOR DE INVESTIGAÇÃO";
+            display: block;
+            font-size: 0.75rem;
+            color: #66fcf1;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: #66fcf1;
+            margin-bottom: 15px;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p.interrogation-text {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #e5e5e5;
+            font-size: 0.95rem;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-left: 3px solid #66fcf1;
+            border-radius: 4px;
+        }
+
+        .emojis {
+            font-size: 2.5rem;
+            margin: 15px 0;
+            letter-spacing: 10px;
+        }
+
+        label.field-label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            color: #c5c6c7;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #45a29e;
+            background: #0b0c10;
+            color: #66fcf1;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 15px;
+            outline: none;
+            letter-spacing: 1px;
+        }
+
+        input::placeholder {
+            color: #45a29e55;
+            font-size: 0.85rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 6px;
+            border: none;
+            background: #45a29e;
+            color: #0b0c10;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: #66fcf1;
+            box-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .hint-btn {
+            background: transparent;
+            border: 1px dashed #45a29e;
+            color: #45a29e;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            padding: 8px;
+        }
+
+        .hint-btn:hover {
+            background: rgba(69, 162, 158, 0.1);
+        }
+
+        .hint-text {
+            display: none;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #c5c6c7;
+            font-style: italic;
+            text-align: left;
+            background: rgba(255,255,255,0.03);
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .error-msg {
+            color: #ff4a4a;
+            font-size: 0.8rem;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+            text-align: left;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* TELA FINAL DE PRISÃO */
+        .celebration {
+            text-align: center;
+            border-color: #ff4a4a;
+        }
+
+        .celebration::before {
+            content: "⚠️ MANDADO DE PRISÃO // CASO ENCERRADO";
+            color: #ff4a4a;
+        }
+
+        .celebration h1 {
+            color: #ff4a4a;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+        }
+
+        .stamp {
+            border: 3px dashed #ff4a4a;
+            color: #ff4a4a;
+            padding: 5px 10px;
+            display: inline-block;
+            font-weight: bold;
+            transform: rotate(-5deg);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body id="bodyTag">
+
+    <div class="container">
+        
+        <!-- FASE 1: INTERROGATÓRIO RESTAURANTE -->
+        <div id="phase1" class="phase-card">
+            <h2>Interrogatório • Fase 1</h2>
+            <p class="interrogation-text">
+                "Investigada, o detetive responsável exige respostas claras. Relate o local exato onde o pacto de afeto foi selado com um brinde especial e a pergunta crucial foi feita."
+            </p>
+            <input type="text" id="ans1" placeholder="Digite o local do restaurante...">
+            <p id="err1" class="error-msg">[!] Resposta inconclusiva. O detetive rejeitou este registro.</p>
+            <button onclick="checkPhase1()">REGISTRAR DEPOIMENTO</button>
+        </div>
+
+        <!-- FASE 2: PISTA VISUAL LAGO IGAPÓ -->
+        <div id="phase2" class="phase-card hidden">
+            <h2>Interrogatório • Fase 2</h2>
+            <p class="interrogation-text">
+                "Análise de evidências visuais coletadas em campo. Decodifique os símbolos abaixo para identificar o ponto de monitoramento:"
+            </p>
+            <div class="emojis">🌊🎄🎅</div>
+            
+            <input type="text" id="ans2" placeholder="Local do passeio...">
+            <p id="err2" class="error-msg">[!] Localização incorreta nos registros de Londrina.</p>
+            <button onclick="checkPhase2()">VALIDAR EVIDÊNCIA</button>
+            
+            <button class="hint-btn" onclick="toggleHint()">💡 Inspecionar Dica do Agente</button>
+            <p id="hintText" class="hint-text">Dica: Recorde daquela noite de dezembro com luzes espelhadas na água em Londrina... 🌊</p>
+        </div>
+
+        <!-- FASE 3: DADOS HISTÓRICOS -->
+        <div id="phase3" class="phase-card hidden">
+            <h2>Interrogatório • Fase 3</h2>
+            <p class="interrogation-text">
+                "Última etapa do inquérito. Responda com exatidão policial aos quesitos abaixo para encerrar o caso:"
+            </p>
+            
+            <label class="field-label">1. Data de início oficial do vínculo (DD/MM/AA ou DD/MM/AAAA):</label>
+            <input type="text" id="ans3_1" placeholder="Ex: 21/08/22">
+
+            <label class="field-label">2. Qual foi a maior conquista oficializada por vocês?</label>
+            <input type="text" id="ans3_2" placeholder="Sua resposta...">
+
+            <p id="err3" class="error-msg">[!] Divergência nos registros do casal. Reveja os fatos.</p>
+            <button onclick="checkPhase3()">CONCLUIR INVESTIGAÇÃO 📁</button>
+        </div>
+
+        <!-- TELA FINAL: PRISÃO E VENDAR OS OLHOS -->
+        <div id="phaseFinal" class="phase-card celebration hidden">
+            <div class="stamp">INVESTIGAÇÃO CONCLUÍDA</div>
+            <h1>🚨 CASO ENCERRADO 🚨</h1>
+            
+            <p class="interrogation-text" style="text-align: center; border-left: 3px solid #ff4a4a;">
+                Todos os dados foram verificados com sucesso. A investigada foi considerada culpada por excesso de charme e cumplicidade.
+            </p>
+            
+            <div style="background: rgba(255, 74, 74, 0.1); padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid rgba(255, 74, 74, 0.3);">
+                <p style="color: #ff4a4a; font-weight: bold; font-size: 0.95rem; margin-bottom: 8px;">⚖️ SENTENÇA IMEDIATA:</p>
+                <p style="font-size: 0.9rem; line-height: 1.5; color: #fff;">
+                    Você será <strong>levada presa e com os olhos vendados</strong> para algum local desconhecido que você saberá mais tarde! Prepare-se para a custódia.
+                </p>
+                <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2);">
+                    <p style="color: #66fcf1; font-weight: bold; font-size: 0.85rem;">📍 DESTINO DA CUSTÓDIA / CASA DA SUA PRIMA:</p>
+                    <p style="font-size: 0.95rem; color: #fff; margin-top: 4px;">Rua Pernambuco, 936 - Centro, Londrina - PR</p>
+                </div>
+            </div>
+            
+            <p style="font-style: italic; color: #c5c6c7; font-size: 0.85rem;">Prepara o sorriso e o coração! ❤️</p>
+        </div>
+
+    </div>
+
+    <script>
+        function checkPhase1() {
+            const ans = document.getElementById('ans1').value.toLowerCase().trim();
+            const valid = ans.includes('pomodoro') || ans.includes('restaurante');
+            
+            if (valid) {
+                document.getElementById('err1').style.display = 'none';
+                document.getElementById('phase1').classList.add('hidden');
+                document.getElementById('phase2').classList.remove('hidden');
+            } else {
+                document.getElementById('err1').style.display = 'block';
+            }
+        }
+
+        function checkPhase2() {
+            const ans = document.getElementById('ans2').value.toLowerCase().trim();
+            if (ans.includes('igapo') || ans.includes('igapó')) {
+                document.getElementById('err2').style.display = 'none';
+                document.getElementById('phase2').classList.add('hidden');
+                document.getElementById('phase3').classList.remove('hidden');
+            } else {
+                document.getElementById('err2').style.display = 'block';
+            }
+        }
+
+        function toggleHint() {
+            const hint = document.getElementById('hintText');
+            hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function checkPhase3() {
+            const dateAns = document.getElementById('ans3_1').value.trim();
+            const conquestAns = document.getElementById('ans3_2').value.toLowerCase().trim();
+
+            const validDate = dateAns.includes('21/08/22') || dateAns.includes('21/08/2022') || dateAns.includes('21-08-22') || dateAns.includes('21.08.22') || dateAns.includes('2108');
+            const validConquest = conquestAns.includes('ap') || conquestAns.includes('apto') || conquestAns.includes('apartamento');
+
+            if (validDate && validConquest) {
+                document.getElementById('err3').style.display = 'none';
+                document.getElementById('phase3').classList.add('hidden');
+                document.getElementById('phaseFinal').classList.remove('hidden');
+                
+                // Ativar efeito visual de sirenes policiais na tela final
+                document.getElementById('bodyTag').classList.add('sirens-active');
+            } else {
+                document.getElementById('err3').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
